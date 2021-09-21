@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HotDesk.Api.Tooling.StartupTasks
+namespace HotDesk.Api.Tooling.StartupTasks.Common
 {
     public static class AsyncStartupTaskExtensions
     {

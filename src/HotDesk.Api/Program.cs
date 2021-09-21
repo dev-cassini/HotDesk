@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using HotDesk.Api.Tooling.StartupTasks;
+using HotDesk.Api.Tooling.StartupTasks.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 

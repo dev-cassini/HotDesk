@@ -8,7 +8,7 @@ namespace HotDesk.Infrastructure
         public HotDeskDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<HotDeskDbContext>();
-            optionsBuilder.UseSqlServer();
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=HotDesk;Trusted_Connection=True");
 
             return new HotDeskDbContext(optionsBuilder.Options);
         }

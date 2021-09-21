@@ -1,8 +1,7 @@
 ﻿using HotDesk.Domain.Entities;
-using HotDesk.Domain.Entities.Validators;
+using HotDesk.Domain.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Collections.Generic;
 
 namespace HotDesk.Infrastructure.EntityTypeConfigurations
 {

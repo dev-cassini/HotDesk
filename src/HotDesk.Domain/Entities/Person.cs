@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using HotDesk.Domain.Entities.Common;
-using HotDesk.Domain.Entities.Validators;
+﻿using HotDesk.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 
@@ -37,8 +35,6 @@ namespace HotDesk.Domain.Entities
             FirstName = firstName;
             LastName = lastName;
             Enabled = enabled;
-
-            new PersonValidator().ValidateAndThrow(this);
         }
     }
 }

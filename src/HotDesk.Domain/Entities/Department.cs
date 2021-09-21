@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using HotDesk.Domain.Entities.Common;
-using HotDesk.Domain.Entities.Validators;
+﻿using HotDesk.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +19,7 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// A list of locations in which the department exists.
         /// </summary>
-        public List<Location>? Locations { get; protected set; }
+        public List<LocationDepartment>? LocationDepartments { get; protected set; }
 
         protected Department()
         {
@@ -31,8 +29,6 @@ namespace HotDesk.Domain.Entities
         {
             Name = name;
             Enabled = enabled;
-
-            new DepartmentValidator().ValidateAndThrow(this);
         }
     }
 }

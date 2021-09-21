@@ -1,4 +1,4 @@
-﻿namespace HotDesk.Domain.Entities.Validators
+﻿namespace HotDesk.Domain.Validators
 {
     public class ValidatorConstants
     {

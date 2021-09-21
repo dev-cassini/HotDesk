@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HotDesk.Application.Commands;
+using HotDesk.Application.Commands.Bookings;
+using HotDesk.Application.Dtos.Bookings;
+using HotDesk.Domain.Entities;
+using HotDesk.Domain.Entities.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace HotDesk.Api.Controllers
@@ -12,10 +16,20 @@ namespace HotDesk.Api.Controllers
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status401Unauthorized)]
     public class BookingsController : ControllerBase
     {
-        [HttpGet("{bookingId}")]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get(Guid bookingId)
+        private readonly ICreateBookingCommand _createBookingCommand;
+
+        public BookingsController(ICreateBookingCommand createBookingCommand)
         {
+            _createBookingCommand = createBookingCommand;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status201Created)]
+        public async Task<IActionResult> Post(CreateBookingDto createBookingDto)
+        {
+            var commandHandler = new CommandHandler<CreateBookingDto, Booking>(_createBookingCommand);
+            await commandHandler.HandleAsync(createBookingDto);
+
             return Ok();
         }
     }

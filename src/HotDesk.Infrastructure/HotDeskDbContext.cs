@@ -19,11 +19,12 @@ namespace HotDesk.Infrastructure
         {
         }
 
-        public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Desk> Desks { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Booking> Bookings { get; set; } = null!;
+        public DbSet<Department> Departments { get; set; } = null!;
+        public DbSet<Desk> Desks { get; set; } = null!;
+        public DbSet<Location> Locations { get; set; } = null!;
+        public DbSet<LocationDepartment> LocationDepartments { get; set; } = null!;
+        public DbSet<Person> Persons { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

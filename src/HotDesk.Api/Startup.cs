@@ -1,5 +1,8 @@
 using HotDesk.Api.Tooling.StartupTasks;
+using HotDesk.Api.Tooling.StartupTasks.Common;
+using HotDesk.Domain.Tooling;
 using HotDesk.Infrastructure;
+using HotDesk.Infrastructure.Tooling;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,9 +40,14 @@ namespace HotDesk.Api
             });
 
             services.AddHttpContextAccessor();
+            services.AddHotDeskDomainServices();
+            services.AddHotDeskInfrastructureServices();
 
-            services.AddTransient<MigrateDatabase>();
-            services.AddTransient<IAsyncStartupTask, ScopedAsyncStartupTask<MigrateDatabase>>();
+            services.AddTransient<MigrateDatabaseStartupTask>();
+            services.AddTransient<DataSeederStartupTask>();
+            services.AddTransient<IAsyncStartupTask, ScopedAsyncStartupTask<MigrateDatabaseStartupTask>>();
+            services.AddTransient<IAsyncStartupTask, ScopedAsyncStartupTask<DataSeederStartupTask>>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

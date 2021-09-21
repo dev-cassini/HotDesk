@@ -1,11 +1,10 @@
-﻿using HotDesk.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HotDesk.Api.Tooling.StartupTasks
+namespace HotDesk.Infrastructure.Tooling
 {
-    public class MigrateDatabase : IAsyncStartupTask
+    public class MigrateDatabase
     {
         private readonly HotDeskDbContext _dbContext;
 
@@ -14,7 +13,7 @@ namespace HotDesk.Api.Tooling.StartupTasks
             _dbContext = dbContext;
         }
 
-        public async Task ExecuteAsync(CancellationToken cancellationToken)
+        public async Task MigrateAsync(CancellationToken cancellationToken)
         {
             await _dbContext.Database.MigrateAsync(cancellationToken);
         }
