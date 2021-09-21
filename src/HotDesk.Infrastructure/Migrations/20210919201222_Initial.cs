@@ -54,11 +54,10 @@ namespace HotDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Desks",
+                name: "LocationDepartments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false),
@@ -67,15 +66,15 @@ namespace HotDesk.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Desks", x => x.Id);
+                    table.PrimaryKey("PK_LocationDepartments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Desks_Departments_DepartmentId",
+                        name: "FK_LocationDepartments_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Desks_Locations_LocationId",
+                        name: "FK_LocationDepartments_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "Id",
@@ -83,25 +82,23 @@ namespace HotDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LocationDepartmentMappings",
+                name: "Desks",
                 columns: table => new
                 {
-                    DepartmentsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LocationDepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    LastUpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationDepartmentMappings", x => new { x.DepartmentsId, x.LocationsId });
+                    table.PrimaryKey("PK_Desks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LocationDepartmentMappings_Departments_DepartmentsId",
-                        column: x => x.DepartmentsId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LocationDepartmentMappings_Locations_LocationsId",
-                        column: x => x.LocationsId,
-                        principalTable: "Locations",
+                        name: "FK_Desks_LocationDepartments_LocationDepartmentId",
+                        column: x => x.LocationDepartmentId,
+                        principalTable: "LocationDepartments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -152,14 +149,9 @@ namespace HotDesk.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Desks_DepartmentId",
+                name: "IX_Desks_LocationDepartmentId",
                 table: "Desks",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Desks_LocationId",
-                table: "Desks",
-                column: "LocationId");
+                column: "LocationDepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Desks_Name",
@@ -168,9 +160,15 @@ namespace HotDesk.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_LocationDepartmentMappings_LocationsId",
-                table: "LocationDepartmentMappings",
-                column: "LocationsId");
+                name: "IX_LocationDepartments_DepartmentId",
+                table: "LocationDepartments",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LocationDepartments_LocationId_DepartmentId",
+                table: "LocationDepartments",
+                columns: new[] { "LocationId", "DepartmentId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_Name",
@@ -191,13 +189,13 @@ namespace HotDesk.Infrastructure.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "LocationDepartmentMappings");
-
-            migrationBuilder.DropTable(
                 name: "Desks");
 
             migrationBuilder.DropTable(
                 name: "Persons");
+
+            migrationBuilder.DropTable(
+                name: "LocationDepartments");
 
             migrationBuilder.DropTable(
                 name: "Departments");

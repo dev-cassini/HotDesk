@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HotDesk.Domain.Entities;
 
-namespace HotDesk.Domain.Entities.Validators
+namespace HotDesk.Domain.Validators.Persons
 {
     public class PersonValidator : AbstractValidator<Person>
     {

@@ -19,21 +19,6 @@ namespace HotDesk.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DepartmentLocation", b =>
-                {
-                    b.Property<Guid>("DepartmentsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LocationsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("DepartmentsId", "LocationsId");
-
-                    b.HasIndex("LocationsId");
-
-                    b.ToTable("LocationDepartmentMappings");
-                });
-
             modelBuilder.Entity("HotDesk.Domain.Entities.Booking", b =>
                 {
                     b.Property<Guid>("Id")
@@ -101,16 +86,13 @@ namespace HotDesk.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset>("LastUpdatedAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid>("LocationDepartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -120,9 +102,7 @@ namespace HotDesk.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("LocationId");
+                    b.HasIndex("LocationDepartmentId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -157,6 +137,36 @@ namespace HotDesk.Infrastructure.Migrations
                     b.ToTable("Locations");
                 });
 
+            modelBuilder.Entity("HotDesk.Domain.Entities.LocationDepartment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("LastUpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("LocationId", "DepartmentId")
+                        .IsUnique();
+
+                    b.ToTable("LocationDepartments");
+                });
+
             modelBuilder.Entity("HotDesk.Domain.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
@@ -189,21 +199,6 @@ namespace HotDesk.Infrastructure.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("DepartmentLocation", b =>
-                {
-                    b.HasOne("HotDesk.Domain.Entities.Department", null)
-                        .WithMany()
-                        .HasForeignKey("DepartmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HotDesk.Domain.Entities.Location", null)
-                        .WithMany()
-                        .HasForeignKey("LocationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HotDesk.Domain.Entities.Booking", b =>
                 {
                     b.HasOne("HotDesk.Domain.Entities.Desk", "Desk")
@@ -225,14 +220,25 @@ namespace HotDesk.Infrastructure.Migrations
 
             modelBuilder.Entity("HotDesk.Domain.Entities.Desk", b =>
                 {
-                    b.HasOne("HotDesk.Domain.Entities.Department", "Department")
+                    b.HasOne("HotDesk.Domain.Entities.LocationDepartment", "LocationDepartment")
                         .WithMany()
+                        .HasForeignKey("LocationDepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LocationDepartment");
+                });
+
+            modelBuilder.Entity("HotDesk.Domain.Entities.LocationDepartment", b =>
+                {
+                    b.HasOne("HotDesk.Domain.Entities.Department", "Department")
+                        .WithMany("LocationDepartments")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HotDesk.Domain.Entities.Location", "Location")
-                        .WithMany()
+                        .WithMany("LocationDepartments")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -242,9 +248,19 @@ namespace HotDesk.Infrastructure.Migrations
                     b.Navigation("Location");
                 });
 
+            modelBuilder.Entity("HotDesk.Domain.Entities.Department", b =>
+                {
+                    b.Navigation("LocationDepartments");
+                });
+
             modelBuilder.Entity("HotDesk.Domain.Entities.Desk", b =>
                 {
                     b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("HotDesk.Domain.Entities.Location", b =>
+                {
+                    b.Navigation("LocationDepartments");
                 });
 
             modelBuilder.Entity("HotDesk.Domain.Entities.Person", b =>

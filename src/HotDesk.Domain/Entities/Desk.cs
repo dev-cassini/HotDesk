@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using HotDesk.Domain.Entities.Common;
-using HotDesk.Domain.Entities.Validators;
+﻿using HotDesk.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 
@@ -14,24 +12,14 @@ namespace HotDesk.Domain.Entities
         public string Name { get; protected set; } = string.Empty;
 
         /// <summary>
-        /// Id of location.
+        /// Id of the location department to which the desk belongs.
         /// </summary>
-        public Guid LocationId { get; protected set; }
+        public Guid LocationDepartmentId { get; protected set; }
 
         /// <summary>
-        /// Location of desk.
+        /// Location department to which the desk belongs.
         /// </summary>
-        public Location Location { get; protected set; }
-
-        /// <summary>
-        /// Id of the department to which the desk belongs.
-        /// </summary>
-        public Guid DepartmentId { get; protected set; }
-
-        /// <summary>
-        /// Department to which the desk belongs.
-        /// </summary>
-        public Department Department { get; protected set; }
+        public LocationDepartment LocationDepartment { get; protected set; } = null!;
 
         /// <summary>
         /// Is the desk enabled?
@@ -50,16 +38,12 @@ namespace HotDesk.Domain.Entities
         public Desk(
             Guid id,
             string name,
-            Location location,
-            Department department,
+            Guid locationDepartmentId,
             bool enabled) : base(id)
         {
             Name = name;
-            Location = location;
-            Department = department;
+            LocationDepartmentId = locationDepartmentId;
             Enabled = enabled;
-
-            new DeskValidator().ValidateAndThrow(this);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using HotDesk.Domain.Entities;
 
-namespace HotDesk.Domain.Entities.Validators
+namespace HotDesk.Domain.Validators.Locations
 {
     public class LocationValidator : AbstractValidator<Location>
     {

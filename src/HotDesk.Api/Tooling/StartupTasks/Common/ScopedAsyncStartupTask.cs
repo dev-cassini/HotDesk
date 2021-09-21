@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HotDesk.Api.Tooling.StartupTasks
+namespace HotDesk.Api.Tooling.StartupTasks.Common
 {
     public class ScopedAsyncStartupTask<T> : IAsyncStartupTask where T : IAsyncStartupTask
     {

@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using HotDesk.Domain.Entities.Common;
-using HotDesk.Domain.Entities.Validators;
+﻿using HotDesk.Domain.Entities.Common;
 using System;
 
 namespace HotDesk.Domain.Entities
@@ -15,7 +13,7 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// Desk that the booking is for.
         /// </summary>
-        public Desk Desk { get; protected set; }
+        public Desk Desk { get; protected set; } = null!;
 
         /// <summary>
         /// Id of the person that the desk is booked for.
@@ -25,7 +23,7 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// Person that the desk is booked for.
         /// </summary>
-        public Person Person { get; protected set; }
+        public Person Person { get; protected set; } = null!;
 
         /// <summary>
         /// Start date and time, in UTC, of the booking.
@@ -43,17 +41,15 @@ namespace HotDesk.Domain.Entities
 
         public Booking(
             Guid id,
-            Desk desk,
-            Person person,
+            Guid deskId,
+            Guid personId,
             DateTimeOffset startTime,
             DateTimeOffset endTime) : base(id)
         {
-            Desk = desk;
-            Person = person;
+            DeskId = deskId;
+            PersonId = personId;
             StartTime = startTime;
             EndTime = endTime;
-
-            new BookingValidator().ValidateAndThrow(this);
         }
     }
 }

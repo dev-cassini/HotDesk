@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using HotDesk.Domain.Entities.Common;
 
-namespace HotDesk.Domain.Entities.Validators
+namespace HotDesk.Domain.Validators
 {
     public class DomainEntityValidator : AbstractValidator<DomainEntity>
     {

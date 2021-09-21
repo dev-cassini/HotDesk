@@ -12,11 +12,6 @@ namespace HotDesk.Infrastructure.EntityTypeConfigurations
             builder.HasKey(location => location.Id);
             builder.HasIndex(location => location.Name).IsUnique();
             builder.Property(location => location.Name).IsRequired().HasMaxLength(ValidatorConstants.NameMaxLength);
-
-            builder
-                .HasMany(location => location.Departments)
-                .WithMany(department => department.Locations)
-                .UsingEntity(j => j.ToTable("LocationDepartmentMappings"));
         }
     }
 }
