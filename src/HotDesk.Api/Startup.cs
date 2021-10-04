@@ -21,12 +21,14 @@ namespace HotDesk.Api
 {
     public class Startup
     {
+        private readonly CorsConfiguration _corsConfiguration;
         private readonly IdentityServerConfiguration _identityServerConfiguration;
         private readonly ServiceInstanceConfiguration _serviceInstanceConfiguration;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _corsConfiguration = configuration.GetSection("Cors").Get<CorsConfiguration>();
             _identityServerConfiguration = configuration.GetSection("IdentityServer").Get<IdentityServerConfiguration>();
             _serviceInstanceConfiguration = configuration.Get<ServiceInstanceConfiguration>();
         }
@@ -47,26 +49,32 @@ namespace HotDesk.Api
                 c.CustomSchemaIds(s => s.FullName);
                 c.UseInlineDefinitionsForEnums();
 
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                if (_identityServerConfiguration.RequiresAuthentication)
                 {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                     {
-                        ClientCredentials = new OpenApiOAuthFlow
+                        Type = SecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows
                         {
-                            TokenUrl = new Uri($"{_identityServerConfiguration.Url}/connect/token"),
-                            Scopes = new Dictionary<string, string>
+                            ClientCredentials = new OpenApiOAuthFlow
                             {
-                                { 
+                                TokenUrl = new Uri($"{_identityServerConfiguration.Url}/connect/token"),
+                                Scopes = new Dictionary<string, string>
+                            {
+                                {
                                     _identityServerConfiguration.HotDeskApiAdminScope,
                                     "Hot Desk API read and write access."
                                 }
                             }
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
-                c.OperationFilter<AuthoriseCheckOperationFilter>();
+                if (_identityServerConfiguration.RequiresAuthorisation)
+                {
+                    c.OperationFilter<AuthoriseCheckOperationFilter>();
+                }
 
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{_serviceInstanceConfiguration.ServiceName}.xml");
                 if (File.Exists(xmlPath))
@@ -77,7 +85,7 @@ namespace HotDesk.Api
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(c =>
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
                 {
                     c.Authority = _identityServerConfiguration.Url;
                     c.RequireHttpsMetadata = _identityServerConfiguration.RequiresHttps;
@@ -92,6 +100,8 @@ namespace HotDesk.Api
                     Policies.AdministrationPolicy,
                     policy => policy.RequireClaim("scope", _identityServerConfiguration.HotDeskApiAdminScope));
             });
+
+            services.AddCors();
 
             services.AddDbContext<HotDeskDbContext>(options =>
             {
@@ -128,13 +138,32 @@ namespace HotDesk.Api
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            if (_identityServerConfiguration.RequiresAuthentication)
+            {
+                app.UseAuthentication();
+            }
+
+            if (_identityServerConfiguration.RequiresAuthorisation)
+            {
+                app.UseAuthorization();
+            }
+
+            app.UseCors(policy =>
+            {
+                policy.WithOrigins(_corsConfiguration.AllowedOrigins.ToArray());
+                policy.SetIsOriginAllowedToAllowWildcardSubdomains();
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+            });
 
             app.UseEndpoints(endpoints =>
             {
                 var controllerEndpoints = endpoints.MapControllers();
-                controllerEndpoints.RequireAuthorization();
+
+                if (_identityServerConfiguration.RequiresAuthorisation)
+                {
+                    controllerEndpoints.RequireAuthorization();
+                }
             });
         }
     }
