@@ -1,8 +1,10 @@
 ﻿using HotDesk.Application.Commands.Bookings;
+using HotDesk.Application.Queries.Desks;
 using HotDesk.Application.Queries.LocationDepartments;
 using HotDesk.Domain.Entities;
 using HotDesk.Domain.Repositories;
 using HotDesk.Infrastructure.Commands.Bookings;
+using HotDesk.Infrastructure.Queries.Desks;
 using HotDesk.Infrastructure.Queries.LocationDepartments;
 using HotDesk.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,6 @@ namespace HotDesk.Infrastructure.Tooling
         public static void AddHotDeskInfrastructureServices(this IServiceCollection services)
         {
             services.AddTransient<MigrateDatabase>();
-            services.AddTransient(typeof(ReadOnlyDbContext<>)); ///TODO: remove one of these readonly dbcontexts
             services.AddTransient<IReadOnlyRepository, ReadOnlyDbContext<HotDeskDbContext>>();
 
             AddRepositories(services);
@@ -45,7 +46,8 @@ namespace HotDesk.Infrastructure.Tooling
 
         private static void AddQueries(this IServiceCollection services)
         {
-            services.AddScoped<IGetLocationDepartmentQuery, GetLocationDepartmentQuery>();
+            services.AddScoped<IDeskQuery, DeskQuery>();
+            services.AddScoped<ILocationDepartmentQuery, GetLocationDepartmentQuery>();
         }
 
         private static void AddCommands(this IServiceCollection services)

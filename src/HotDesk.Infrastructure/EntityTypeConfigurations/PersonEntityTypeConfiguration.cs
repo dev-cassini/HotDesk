@@ -18,6 +18,11 @@ namespace HotDesk.Infrastructure.EntityTypeConfigurations
                 .HasMany(person => person.Bookings)
                 .WithOne(booking => booking.Person)
                 .HasForeignKey(booking => booking.PersonId);
+
+            builder
+                .HasMany(person => person.LocationDepartments)
+                .WithMany(locationDepartment => locationDepartment.Persons)
+                .UsingEntity(j => j.ToTable("PersonLocationDeparmentMappings"));
         }
     }
 }

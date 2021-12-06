@@ -4,14 +4,16 @@ using HotDesk.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HotDeskDbContext))]
-    partial class HotDeskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211004224316_AddGeometryToDesk")]
+    partial class AddGeometryToDesk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,21 +213,6 @@ namespace HotDesk.Infrastructure.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("LocationDepartmentPerson", b =>
-                {
-                    b.Property<Guid>("LocationDepartmentsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PersonsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("LocationDepartmentsId", "PersonsId");
-
-                    b.HasIndex("PersonsId");
-
-                    b.ToTable("PersonLocationDeparmentMappings");
-                });
-
             modelBuilder.Entity("HotDesk.Domain.Entities.Booking", b =>
                 {
                     b.HasOne("HotDesk.Domain.Entities.Desk", "Desk")
@@ -273,21 +260,6 @@ namespace HotDesk.Infrastructure.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("LocationDepartmentPerson", b =>
-                {
-                    b.HasOne("HotDesk.Domain.Entities.LocationDepartment", null)
-                        .WithMany()
-                        .HasForeignKey("LocationDepartmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HotDesk.Domain.Entities.Person", null)
-                        .WithMany()
-                        .HasForeignKey("PersonsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("HotDesk.Domain.Entities.Department", b =>

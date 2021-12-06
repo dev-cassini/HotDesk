@@ -36,15 +36,15 @@ namespace HotDesk.Api.Controllers
         /// </summary>
         /// <param name="createBookingDto">New booking details.</param>
         /// <returns>New booking details.</returns>
-        /// <response code="201">New booking was created successfully.</response>
+        /// <response code="204">New booking was created successfully.</response>
         [HttpPost]
-        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Post(CreateBookingDto createBookingDto)
         {
             var commandHandler = new CommandHandler<CreateBookingDto, Booking>(_createBookingCommand);
             await commandHandler.HandleAsync(createBookingDto);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

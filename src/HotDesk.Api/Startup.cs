@@ -5,6 +5,7 @@ using HotDesk.Api.Tooling.Swagger;
 using HotDesk.Domain.Tooling;
 using HotDesk.Infrastructure;
 using HotDesk.Infrastructure.Tooling;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,12 +61,12 @@ namespace HotDesk.Api
                             {
                                 TokenUrl = new Uri($"{_identityServerConfiguration.Url}/connect/token"),
                                 Scopes = new Dictionary<string, string>
-                            {
                                 {
-                                    _identityServerConfiguration.HotDeskApiAdminScope,
-                                    "Hot Desk API read and write access."
+                                    {
+                                        _identityServerConfiguration.HotDeskApiAdminScope,
+                                        "Hot Desk API read and write access."
+                                    }
                                 }
-                            }
                             }
                         }
                     });
@@ -98,7 +99,7 @@ namespace HotDesk.Api
             {
                 c.AddPolicy(
                     Policies.AdministrationPolicy,
-                    policy => policy.RequireClaim("scope", _identityServerConfiguration.HotDeskApiAdminScope));
+                    policy => policy.RequireClaim(JwtClaimTypes.Scope, _identityServerConfiguration.HotDeskApiAdminScope));
             });
 
             services.AddCors();
@@ -135,18 +136,9 @@ namespace HotDesk.Api
             });
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            if (_identityServerConfiguration.RequiresAuthentication)
-            {
-                app.UseAuthentication();
-            }
-
-            if (_identityServerConfiguration.RequiresAuthorisation)
-            {
-                app.UseAuthorization();
-            }
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors(policy =>
             {
@@ -163,6 +155,10 @@ namespace HotDesk.Api
                 if (_identityServerConfiguration.RequiresAuthorisation)
                 {
                     controllerEndpoints.RequireAuthorization();
+                }
+                else
+                {
+                    controllerEndpoints.AllowAnonymous();
                 }
             });
         }

@@ -26,11 +26,20 @@ namespace HotDesk.Domain.Entities
         /// </summary>
         public List<Booking>? Bookings { get; protected set; }
 
+        /// <summary>
+        /// Location departments that the person belongs to.
+        /// </summary>
+        public List<LocationDepartment>? LocationDepartments { get; protected set;}
+
         protected Person()
         {
         }
 
-        public Person(Guid id, string firstName, string lastName, bool enabled) : base(id)
+        public Person(
+            Guid id,
+            string firstName,
+            string lastName,
+            bool enabled) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;

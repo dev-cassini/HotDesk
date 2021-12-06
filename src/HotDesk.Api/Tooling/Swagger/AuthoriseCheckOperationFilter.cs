@@ -37,7 +37,7 @@ namespace HotDesk.Api.Tooling.Swagger
                                     Type = ReferenceType.SecurityScheme,
                                     Id = "oauth2"}
                             }
-                        ] = new[] { "admin:hot_desk_api" } //config??
+                        ] = new[] { "hot_desk_api:admin" } //config??
                     }
                 };
 

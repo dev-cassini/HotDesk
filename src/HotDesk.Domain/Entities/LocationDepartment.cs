@@ -1,5 +1,6 @@
 ﻿using HotDesk.Domain.Entities.Common;
 using System;
+using System.Collections.Generic;
 
 namespace HotDesk.Domain.Entities
 {
@@ -13,7 +14,7 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// Location.
         /// </summary>
-        public Location Location { get; protected set; } = null!;
+        public Location Location { get; protected set; }
 
         /// <summary>
         /// Id of department.
@@ -23,7 +24,12 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// Department.
         /// </summary>
-        public Department Department { get; protected set; } = null!;
+        public Department Department { get; protected set; }
+
+        /// <summary>
+        /// Persons that belong to the location department.
+        /// </summary>
+        public List<Person>? Persons { get; protected set; }
 
         /// <summary>
         /// Is the location department enabled?

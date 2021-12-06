@@ -2,6 +2,7 @@
 using HotDesk.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -69,24 +70,141 @@ namespace HotDesk.Domain.Tooling
                 true);
             await _locationDepartmentRepository.PutAsync(locationDepartment);
 
-            _logger.LogInformation("Seeding desks.");
-            var desk = new Desk(
-                new Guid("cd9e04a6-181b-44a1-be26-fe7899723276"),
-                "Seeded Desk",
-                locationDepartment.Id,
-                true);
-            await _deskRepository.PutAsync(desk);
-
+            var desks = await SeedDesks(locationDepartment.Id);
+            
             _logger.LogInformation("Seeding bookings.");
             var booking = new Booking(
                 new Guid("3e749af0-70d0-48a0-905b-0cf293b8b74b"),
-                desk.Id,
+                desks[0].Id,
                 person.Id,
                 new DateTimeOffset(DateTime.UtcNow.AddDays(1).Date),
                 new DateTimeOffset(DateTime.UtcNow.AddDays(2).Date));
             await _bookingRepository.PutAsync(booking);
 
             _logger.LogInformation("Data seeding complete.");
+        }
+
+        private async Task<List<Desk>> SeedDesks(Guid locationDepartmentId)
+        {
+            _logger.LogInformation("Seeding desks.");
+            var desks = new List<Desk>();
+
+            desks.Add(new Desk(
+                new Guid("cd9e04a6-181b-44a1-be26-fe7899723276"),
+                "Seeded Desk 1",
+                locationDepartmentId,
+                50,
+                175,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("3943212f-0735-402c-8c12-04621b5511c1"),
+                "Seeded Desk 2",
+                locationDepartmentId,
+                235,
+                175,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("b9214334-f4c1-45fe-953d-360543fab4f3"),
+                "Seeded Desk 3",
+                locationDepartmentId,
+                420,
+                175,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("1aee262c-30f0-4085-ac60-1c7934c48951"),
+                "Seeded Desk 4",
+                locationDepartmentId,
+                50,
+                280,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("e4146372-6597-4ce8-b177-d5753b3d36dc"),
+                "Seeded Desk 5",
+                locationDepartmentId,
+                235,
+                280,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("750ab000-1c03-45ab-a54c-264b56886828"),
+                "Seeded Desk 6",
+                locationDepartmentId,
+                420,
+                280,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("3de67874-741b-40c5-ad42-fa3eb6fe07f3"),
+                "Seeded Desk 7",
+                locationDepartmentId,
+                50,
+                490,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("d7bc690f-6b9d-46b6-a6f9-0029f9a0974d"),
+                "Seeded Desk 8",
+                locationDepartmentId,
+                235,
+                490,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("d8f21f7d-68db-4a99-992c-ffb9329822c1"),
+                "Seeded Desk 9",
+                locationDepartmentId,
+                420,
+                490,
+                180,
+                100,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("1a315721-8290-4abc-a980-633a2b615c25"),
+                "Seeded Desk 10",
+                locationDepartmentId,
+                710,
+                175,
+                100,
+                180,
+                true));
+
+            desks.Add(new Desk(
+                new Guid("3b3e5098-147e-4e1c-8c88-479cc37bb7fd"),
+                "Seeded Desk 11",
+                locationDepartmentId,
+                710,
+                410,
+                100,
+                180,
+                true));
+
+            foreach (var desk in desks)
+            {
+                await _deskRepository.PutAsync(desk);
+            }
+
+            return desks;
         }
     }
 }

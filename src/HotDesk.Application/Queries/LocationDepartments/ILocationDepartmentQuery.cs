@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace HotDesk.Application.Queries.LocationDepartments
 {
-    public interface IGetLocationDepartmentQuery
+    public interface ILocationDepartmentQuery
     {
         //Task<LocationDepartmentDto?> GetAsync(Guid locationId, Guid departmentId);
     }

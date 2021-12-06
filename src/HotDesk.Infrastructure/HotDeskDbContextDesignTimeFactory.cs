@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace HotDesk.Infrastructure
 {
-    public class HotDeskDbContextDesignTimeFactory: IDesignTimeDbContextFactory<HotDeskDbContext>
+    public class HotDeskDbContextDesignTimeFactory : IDesignTimeDbContextFactory<HotDeskDbContext>
     {
         public HotDeskDbContext CreateDbContext(string[] args)
         {

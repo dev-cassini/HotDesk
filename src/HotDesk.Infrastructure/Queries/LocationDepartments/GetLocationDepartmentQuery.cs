@@ -1,16 +1,17 @@
 ﻿using HotDesk.Application.Queries.LocationDepartments;
 using HotDesk.Domain.Entities;
+using HotDesk.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
 namespace HotDesk.Infrastructure.Queries.LocationDepartments
 {
-    public class GetLocationDepartmentQuery : IGetLocationDepartmentQuery
+    public class GetLocationDepartmentQuery : ILocationDepartmentQuery
     {
-        private readonly ReadOnlyDbContext<HotDeskDbContext> _dbContext;
+        private readonly IReadOnlyRepository _dbContext;
 
-        public GetLocationDepartmentQuery(ReadOnlyDbContext<HotDeskDbContext> dbContext)
+        public GetLocationDepartmentQuery(IReadOnlyRepository dbContext)
         {
             _dbContext = dbContext;
         }

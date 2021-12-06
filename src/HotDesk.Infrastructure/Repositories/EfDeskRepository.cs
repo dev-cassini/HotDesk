@@ -1,6 +1,5 @@
 ﻿using HotDesk.Domain.Entities;
 using HotDesk.Domain.Repositories;
-using System.Threading.Tasks;
 
 namespace HotDesk.Infrastructure.Repositories
 {
