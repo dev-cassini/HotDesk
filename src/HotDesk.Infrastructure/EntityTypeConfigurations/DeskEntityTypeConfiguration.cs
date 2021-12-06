@@ -12,7 +12,7 @@ namespace HotDesk.Infrastructure.EntityTypeConfigurations
             builder.HasKey(desk => desk.Id);
             builder.HasIndex(desk => desk.Name).IsUnique();
             builder.Property(desk => desk.Name).IsRequired().HasMaxLength(ValidatorConstants.NameMaxLength);
-            builder.HasOne(desk => desk.LocationDepartment);
+            builder.HasOne(desk => desk.Department);
 
             builder
                 .HasMany(desk => desk.Bookings)

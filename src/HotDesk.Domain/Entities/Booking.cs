@@ -13,7 +13,7 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// Desk that the booking is for.
         /// </summary>
-        public Desk Desk { get; protected set; } = null!;
+        public Desk Desk { get; protected set; }
 
         /// <summary>
         /// Id of the person that the desk is booked for.
@@ -23,7 +23,7 @@ namespace HotDesk.Domain.Entities
         /// <summary>
         /// Person that the desk is booked for.
         /// </summary>
-        public Person Person { get; protected set; } = null!;
+        public Person Person { get; protected set; }
 
         /// <summary>
         /// Start date and time, in UTC, of the booking.

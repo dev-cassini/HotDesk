@@ -12,14 +12,24 @@ namespace HotDesk.Domain.Entities
         public string Name { get; protected set; } = string.Empty;
 
         /// <summary>
-        /// Id of the location department to which the desk belongs.
+        /// Id of the floorplan to which the desk belongs.
         /// </summary>
-        public Guid LocationDepartmentId { get; protected set; }
+        public Guid FloorplanId { get; protected set; }
 
         /// <summary>
-        /// Location department to which the desk belongs.
+        /// Floorplan to which the desk belongs.
         /// </summary>
-        public LocationDepartment LocationDepartment { get; protected set; } = null!;
+        public Floorplan Floorplan { get; protected set; }
+
+        /// <summary>
+        /// Id of the department to which the desk belongs.
+        /// </summary>
+        public Guid DepartmentId { get; protected set; }
+
+        /// <summary>
+        /// Department to which the desk belongs.
+        /// </summary>
+        public Department Department { get; protected set; }
 
         /// <summary>
         /// The x-coordinate of the desk.
@@ -62,7 +72,8 @@ namespace HotDesk.Domain.Entities
         public Desk(
             Guid id,
             string name,
-            Guid locationDepartmentId,
+            Guid floorplanId,
+            Guid departmentId,
             int xCoordinate,
             int yCoordinate,
             int width,
@@ -70,7 +81,8 @@ namespace HotDesk.Domain.Entities
             bool enabled) : base(id)
         {
             Name = name;
-            LocationDepartmentId = locationDepartmentId;
+            FloorplanId = floorplanId;
+            DepartmentId = departmentId;
             XCoordinate = xCoordinate;
             YCoordinate = yCoordinate;
             Width = width;

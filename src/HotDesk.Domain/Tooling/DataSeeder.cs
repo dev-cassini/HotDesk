@@ -1,4 +1,5 @@
-﻿using HotDesk.Domain.Entities;
+﻿using FluentValidation;
+using HotDesk.Domain.Entities;
 using HotDesk.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,6 +15,7 @@ namespace HotDesk.Domain.Tooling
         private readonly IDataSeedingRepository<Booking> _bookingRepository;
         private readonly IDataSeedingRepository<Department> _departmentRepository;
         private readonly IDataSeedingRepository<Desk> _deskRepository;
+        private readonly IDataSeedingRepository<Floorplan> _floorplanRepository;
         private readonly IDataSeedingRepository<Location> _locationRepository;
         private readonly IDataSeedingRepository<LocationDepartment> _locationDepartmentRepository;
         private readonly IDataSeedingRepository<Person> _personRepository;
@@ -23,6 +25,7 @@ namespace HotDesk.Domain.Tooling
             IDataSeedingRepository<Booking> bookingRepository,
             IDataSeedingRepository<Department> departmentRepository,
             IDataSeedingRepository<Desk> deskRepository,
+            IDataSeedingRepository<Floorplan> floorplanRepository,
             IDataSeedingRepository<Location> locationRepository,
             IDataSeedingRepository<LocationDepartment> locationDepartmentRepository,
             IDataSeedingRepository<Person> personRepository)
@@ -31,6 +34,7 @@ namespace HotDesk.Domain.Tooling
             _bookingRepository = bookingRepository;
             _departmentRepository = departmentRepository;
             _deskRepository = deskRepository;
+            _floorplanRepository = floorplanRepository;
             _locationRepository = locationRepository;
             _locationDepartmentRepository = locationDepartmentRepository;
             _personRepository = personRepository;
@@ -70,7 +74,16 @@ namespace HotDesk.Domain.Tooling
                 true);
             await _locationDepartmentRepository.PutAsync(locationDepartment);
 
-            var desks = await SeedDesks(locationDepartment.Id);
+            _logger.LogInformation("Seeding floorplans.");
+            var floorplan = new Floorplan(
+                new Guid("fbc006d5-0383-400d-aacb-713242366d22"),
+                "Seeded Floorplan",
+                location.Id,
+                true,
+                new List<IValidator<Floorplan>>());
+            await _floorplanRepository.PutAsync(floorplan);
+
+            var desks = await SeedDesks(floorplan.Id, department.Id);
             
             _logger.LogInformation("Seeding bookings.");
             var booking = new Booking(
@@ -84,7 +97,7 @@ namespace HotDesk.Domain.Tooling
             _logger.LogInformation("Data seeding complete.");
         }
 
-        private async Task<List<Desk>> SeedDesks(Guid locationDepartmentId)
+        private async Task<List<Desk>> SeedDesks(Guid floorplanId, Guid departmentId)
         {
             _logger.LogInformation("Seeding desks.");
             var desks = new List<Desk>();
@@ -92,7 +105,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("cd9e04a6-181b-44a1-be26-fe7899723276"),
                 "Seeded Desk 1",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 50,
                 175,
                 180,
@@ -102,7 +116,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("3943212f-0735-402c-8c12-04621b5511c1"),
                 "Seeded Desk 2",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 235,
                 175,
                 180,
@@ -112,7 +127,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("b9214334-f4c1-45fe-953d-360543fab4f3"),
                 "Seeded Desk 3",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 420,
                 175,
                 180,
@@ -122,7 +138,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("1aee262c-30f0-4085-ac60-1c7934c48951"),
                 "Seeded Desk 4",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 50,
                 280,
                 180,
@@ -132,7 +149,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("e4146372-6597-4ce8-b177-d5753b3d36dc"),
                 "Seeded Desk 5",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 235,
                 280,
                 180,
@@ -142,7 +160,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("750ab000-1c03-45ab-a54c-264b56886828"),
                 "Seeded Desk 6",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 420,
                 280,
                 180,
@@ -152,7 +171,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("3de67874-741b-40c5-ad42-fa3eb6fe07f3"),
                 "Seeded Desk 7",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 50,
                 490,
                 180,
@@ -162,7 +182,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("d7bc690f-6b9d-46b6-a6f9-0029f9a0974d"),
                 "Seeded Desk 8",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 235,
                 490,
                 180,
@@ -172,7 +193,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("d8f21f7d-68db-4a99-992c-ffb9329822c1"),
                 "Seeded Desk 9",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 420,
                 490,
                 180,
@@ -182,7 +204,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("1a315721-8290-4abc-a980-633a2b615c25"),
                 "Seeded Desk 10",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 710,
                 175,
                 100,
@@ -192,7 +215,8 @@ namespace HotDesk.Domain.Tooling
             desks.Add(new Desk(
                 new Guid("3b3e5098-147e-4e1c-8c88-479cc37bb7fd"),
                 "Seeded Desk 11",
-                locationDepartmentId,
+                floorplanId,
+                departmentId,
                 710,
                 410,
                 100,

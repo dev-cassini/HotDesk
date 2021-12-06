@@ -1,10 +1,6 @@
-﻿using HotDesk.Application.Dtos.Desks;
-using HotDesk.Application.Queries.Desks;
+﻿using HotDesk.Application.Queries.Desks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace HotDesk.Api.Controllers
 {
@@ -27,19 +23,6 @@ namespace HotDesk.Api.Controllers
         public DesksController(IDeskQuery deskQuery)
         {
             _deskQuery = deskQuery;
-        }
-
-        /// <summary>
-        /// Get desks belonging to a location department.
-        /// </summary>
-        /// <returns>A list of desk that belong to a location department.</returns>
-        /// <response code="200">Desks were retrieved successfully.</response>
-        [HttpGet("location/{locationId}/department/{departmentId}")]
-        [ProducesResponseType(typeof(List<DeskDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get(Guid locationId, Guid departmentId)
-        {
-            
-            return Ok(await _deskQuery.GetAsync(locationId, departmentId));
         }
     }
 }
