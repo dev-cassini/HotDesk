@@ -49,21 +49,24 @@ namespace HotDesk.Domain.Tooling
                 new Guid("58129a41-0fc8-4125-8fee-b2a79708f50f"),
                 "Seeded",
                 "Person",
-                true);
+                true,
+                new List<IValidator<Person>>());
             await _personRepository.PutAsync(person);
 
             _logger.LogInformation("Seeding locations.");
             var location = new Location(
                 new Guid("d7c836c6-2643-4ea1-aa12-755c3b630251"),
                 "Seeded Location",
-                true);
+                true,
+                new List<IValidator<Location>>());
             await _locationRepository.PutAsync(location);
 
             _logger.LogInformation("Seeding departments.");
             var department = new Department(
                 new Guid("99243db7-9651-42d2-b2ca-e66939284721"),
                 "Seeded Department",
-                true);
+                true,
+                new List<IValidator<Department>>());
             await _departmentRepository.PutAsync(department);
 
             _logger.LogInformation("Seeding location departments.");
@@ -71,7 +74,8 @@ namespace HotDesk.Domain.Tooling
                 new Guid("223d3198-e6d4-477c-a007-7de15d736c7b"),
                 location.Id,
                 department.Id,
-                true);
+                true,
+                new List<IValidator<LocationDepartment>>());
             await _locationDepartmentRepository.PutAsync(locationDepartment);
 
             _logger.LogInformation("Seeding floorplans.");
@@ -91,7 +95,8 @@ namespace HotDesk.Domain.Tooling
                 desks[0].Id,
                 person.Id,
                 new DateTimeOffset(DateTime.UtcNow.AddDays(1).Date),
-                new DateTimeOffset(DateTime.UtcNow.AddDays(2).Date));
+                new DateTimeOffset(DateTime.UtcNow.AddDays(2).Date),
+                new List<IValidator<Booking>>());
             await _bookingRepository.PutAsync(booking);
 
             _logger.LogInformation("Data seeding complete.");
@@ -111,7 +116,8 @@ namespace HotDesk.Domain.Tooling
                 175,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("3943212f-0735-402c-8c12-04621b5511c1"),
@@ -122,7 +128,8 @@ namespace HotDesk.Domain.Tooling
                 175,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("b9214334-f4c1-45fe-953d-360543fab4f3"),
@@ -133,7 +140,8 @@ namespace HotDesk.Domain.Tooling
                 175,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("1aee262c-30f0-4085-ac60-1c7934c48951"),
@@ -144,7 +152,8 @@ namespace HotDesk.Domain.Tooling
                 280,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("e4146372-6597-4ce8-b177-d5753b3d36dc"),
@@ -155,7 +164,8 @@ namespace HotDesk.Domain.Tooling
                 280,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("750ab000-1c03-45ab-a54c-264b56886828"),
@@ -166,7 +176,8 @@ namespace HotDesk.Domain.Tooling
                 280,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("3de67874-741b-40c5-ad42-fa3eb6fe07f3"),
@@ -177,7 +188,8 @@ namespace HotDesk.Domain.Tooling
                 490,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("d7bc690f-6b9d-46b6-a6f9-0029f9a0974d"),
@@ -188,7 +200,8 @@ namespace HotDesk.Domain.Tooling
                 490,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("d8f21f7d-68db-4a99-992c-ffb9329822c1"),
@@ -199,7 +212,8 @@ namespace HotDesk.Domain.Tooling
                 490,
                 180,
                 100,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("1a315721-8290-4abc-a980-633a2b615c25"),
@@ -210,7 +224,8 @@ namespace HotDesk.Domain.Tooling
                 175,
                 100,
                 180,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             desks.Add(new Desk(
                 new Guid("3b3e5098-147e-4e1c-8c88-479cc37bb7fd"),
@@ -221,7 +236,8 @@ namespace HotDesk.Domain.Tooling
                 410,
                 100,
                 180,
-                true));
+                true,
+                new List<IValidator<Desk>>()));
 
             foreach (var desk in desks)
             {

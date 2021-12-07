@@ -1,7 +1,5 @@
-﻿using HotDesk.Application.Commands;
-using HotDesk.Application.Commands.Bookings;
+﻿using HotDesk.Application.Commands.Bookings;
 using HotDesk.Application.Dtos.Bookings;
-using HotDesk.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,8 +39,7 @@ namespace HotDesk.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Post(CreateBookingDto createBookingDto)
         {
-            var commandHandler = new CommandHandler<CreateBookingDto, Booking>(_createBookingCommand);
-            await commandHandler.HandleAsync(createBookingDto);
+            await _createBookingCommand.CreateAsync(createBookingDto);
 
             return NoContent();
         }

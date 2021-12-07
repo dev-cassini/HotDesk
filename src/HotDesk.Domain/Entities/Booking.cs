@@ -1,5 +1,7 @@
-﻿using HotDesk.Domain.Entities.Common;
+﻿using FluentValidation;
+using HotDesk.Domain.Entities.Common;
 using System;
+using System.Collections.Generic;
 
 namespace HotDesk.Domain.Entities
 {
@@ -44,12 +46,18 @@ namespace HotDesk.Domain.Entities
             Guid deskId,
             Guid personId,
             DateTimeOffset startTime,
-            DateTimeOffset endTime) : base(id)
+            DateTimeOffset endTime,
+            List<IValidator<Booking>> validators) : base(id)
         {
             DeskId = deskId;
             PersonId = personId;
             StartTime = startTime;
             EndTime = endTime;
+
+            foreach (var validator in validators)
+            {
+                validator.ValidateAndThrow(this);
+            }
         }
     }
 }

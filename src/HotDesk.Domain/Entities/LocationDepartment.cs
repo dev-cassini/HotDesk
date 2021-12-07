@@ -1,4 +1,5 @@
-﻿using HotDesk.Domain.Entities.Common;
+﻿using FluentValidation;
+using HotDesk.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 
@@ -40,11 +41,21 @@ namespace HotDesk.Domain.Entities
         {
         }
 
-        public LocationDepartment(Guid id, Guid locationId, Guid departmentId, bool enabled) : base(id)
+        public LocationDepartment(
+            Guid id,
+            Guid locationId,
+            Guid departmentId,
+            bool enabled,
+            List<IValidator<LocationDepartment>> validators) : base(id)
         {
             LocationId = locationId;
             DepartmentId = departmentId;
             Enabled = enabled;
+
+            foreach (var validator in validators)
+            {
+                validator.ValidateAndThrow(this);
+            }
         }
     }
 }

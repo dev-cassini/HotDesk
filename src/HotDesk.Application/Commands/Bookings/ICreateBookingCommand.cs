@@ -1,9 +1,10 @@
 ﻿using HotDesk.Application.Dtos.Bookings;
-using HotDesk.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace HotDesk.Application.Commands.Bookings
 {
-    public interface ICreateBookingCommand : ICommand<CreateBookingDto, Booking>
+    public interface ICreateBookingCommand
     {
+        Task CreateAsync(CreateBookingDto createBookingDto);
     }
 }

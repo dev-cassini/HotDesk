@@ -13,6 +13,11 @@ namespace HotDesk.Application.Mappers
                 throw new Exception($"Error mapping desk {desk.Id} to dto. Department property is not populated.");
             }
 
+            if (desk.Bookings is null)
+            {
+                throw new Exception($"Error mapping desk {desk.Id} to dto. Bookings property is not populated.");
+            }
+
             return new DeskDto(
                 desk.Id,
                 desk.Name,
@@ -20,7 +25,8 @@ namespace HotDesk.Application.Mappers
                 desk.XCoordinate,
                 desk.YCoordinate,
                 desk.Width,
-                desk.Height);
+                desk.Height,
+                desk.IsBooked);
         }
     }
 }

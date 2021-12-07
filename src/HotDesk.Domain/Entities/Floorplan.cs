@@ -41,7 +41,7 @@ namespace HotDesk.Domain.Entities
             string name,
             Guid locationId,
             bool enabled,
-            IEnumerable<IValidator<Floorplan>> validators) : base(id)
+            List<IValidator<Floorplan>> validators) : base(id)
         {
             Name = name;
             LocationId = locationId;

@@ -1,6 +1,8 @@
-﻿using HotDesk.Domain.Entities.Common;
+﻿using FluentValidation;
+using HotDesk.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotDesk.Domain.Entities
 {
@@ -65,6 +67,20 @@ namespace HotDesk.Domain.Entities
         /// </summary>
         public List<Booking>? Bookings { get; protected set; }
 
+        public bool IsBooked
+        {
+            get
+            {
+                if (Bookings is null)
+                {
+                    throw new InvalidOperationException($"Cannot ascertain if desk {Id} is booked because bookings is not populated.");
+                }
+
+                var dateTimeUtcNow = DateTime.UtcNow;
+                return Bookings!.Any(booking => booking.StartTime <= dateTimeUtcNow && booking.EndTime > dateTimeUtcNow);
+            }
+        }
+
         protected Desk()
         {
         }
@@ -78,7 +94,8 @@ namespace HotDesk.Domain.Entities
             int yCoordinate,
             int width,
             int height,
-            bool enabled) : base(id)
+            bool enabled,
+            List<IValidator<Desk>> validators) : base(id)
         {
             Name = name;
             FloorplanId = floorplanId;
@@ -88,6 +105,11 @@ namespace HotDesk.Domain.Entities
             Width = width;
             Height = height;
             Enabled = enabled;
+
+            foreach (var validator in validators)
+            {
+                validator.ValidateAndThrow(this);
+            }
         }
     }
 }

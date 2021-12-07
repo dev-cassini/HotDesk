@@ -11,7 +11,8 @@ namespace HotDesk.Application.Dtos.Desks
             int xCoordinate,
             int yCoordinate,
             int width,
-            int height)
+            int height,
+            bool isBooked)
         {
             Id = id;
             Name = name;
@@ -20,20 +21,23 @@ namespace HotDesk.Application.Dtos.Desks
             YCoordinate = yCoordinate;
             Width = width;
             Height = height;
+            IsBooked = isBooked;
         }
 
-        public Guid Id { get; init; }
+        public Guid Id { get; }
 
-        public string Name { get; init; } = string.Empty;
+        public string Name { get; }
 
-        public string DepartmentName { get; init; } = string.Empty;
+        public string DepartmentName { get; }
 
-        public int XCoordinate { get; init; }
+        public int XCoordinate { get; }
 
-        public int YCoordinate { get; init; }
+        public int YCoordinate { get; }
 
-        public int Width { get; init; }
+        public int Width { get; }
 
-        public int Height { get; init; }
+        public int Height { get; }
+
+        public bool IsBooked { get; }
     }
 }

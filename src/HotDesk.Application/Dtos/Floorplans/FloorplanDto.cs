@@ -20,10 +20,10 @@ namespace HotDesk.Application.Dtos.Floorplans
 
         public Guid Id { get; }
 
-        public string Name { get; } = string.Empty;
+        public string Name { get; }
 
-        public string LocationName { get; } = string.Empty;
+        public string LocationName { get; }
 
-        public List<DeskDto> Desks { get; } = new();
+        public List<DeskDto> Desks { get; }
     }
 }

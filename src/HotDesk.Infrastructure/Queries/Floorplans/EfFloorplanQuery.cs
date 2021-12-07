@@ -25,6 +25,8 @@ namespace HotDesk.Infrastructure.Queries.Floorplans
                 .Include(floorplan => floorplan.Location)
                 .Include(floorplan => floorplan.Desks)
                 .ThenInclude(desk => desk.Department)
+                .Include(floorplan => floorplan.Desks)
+                .ThenInclude(desk => desk.Bookings)
                 .SingleOrDefaultAsync(floorplan => floorplan.Id == floorplanId);
 
             if (floorplan is null)

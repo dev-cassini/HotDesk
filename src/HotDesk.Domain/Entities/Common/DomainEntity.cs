@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentValidation;
+using HotDesk.Domain.Validators;
+using System;
 
 namespace HotDesk.Domain.Entities.Common
 {
@@ -17,6 +19,8 @@ namespace HotDesk.Domain.Entities.Common
             Id = id;
             CreatedAt = DateTime.UtcNow;
             LastUpdatedAt = CreatedAt;
+
+            new DomainEntityValidator().ValidateAndThrow(this);
         }
     }
 }

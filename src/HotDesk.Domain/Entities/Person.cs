@@ -1,4 +1,5 @@
-﻿using HotDesk.Domain.Entities.Common;
+﻿using FluentValidation;
+using HotDesk.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 
@@ -39,11 +40,17 @@ namespace HotDesk.Domain.Entities
             Guid id,
             string firstName,
             string lastName,
-            bool enabled) : base(id)
+            bool enabled,
+            List<IValidator<Person>> validators) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             Enabled = enabled;
+
+            foreach (var validator in validators)
+            {
+                validator.ValidateAndThrow(this);
+            }
         }
     }
 }
