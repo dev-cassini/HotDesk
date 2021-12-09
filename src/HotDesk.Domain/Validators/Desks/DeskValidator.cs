@@ -9,6 +9,10 @@ namespace HotDesk.Domain.Validators.Desks
         {
             RuleFor(desk => desk).SetValidator(new DomainEntityValidator());
             RuleFor(desk => desk.Name).NotEmpty().MaximumLength(ValidatorConstants.NameMaxLength);
+            RuleFor(desk => desk.FloorplanId).NotEmpty();
+            RuleFor(desk => desk.DepartmentId).NotEmpty();
+            RuleFor(desk => desk.Width).GreaterThanOrEqualTo(ValidatorConstants.MinimumDeskWidth);
+            RuleFor(desk => desk.Height).GreaterThanOrEqualTo(ValidatorConstants.MinimumDeskHeight);
         }
     }
 }

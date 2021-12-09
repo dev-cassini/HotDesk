@@ -7,8 +7,9 @@ namespace HotDesk.Domain.Validators.Floorplans
     {
         public FloorplanValidator()
         {
-            RuleFor(desk => desk).SetValidator(new DomainEntityValidator());
-            RuleFor(desk => desk.Name).NotEmpty().MaximumLength(ValidatorConstants.NameMaxLength);
+            RuleFor(floorplan => floorplan).SetValidator(new DomainEntityValidator());
+            RuleFor(floorplan => floorplan.Name).NotEmpty().MaximumLength(ValidatorConstants.NameMaxLength);
+            RuleFor(floorplan => floorplan.LocationId).NotEmpty();
         }
     }
 }

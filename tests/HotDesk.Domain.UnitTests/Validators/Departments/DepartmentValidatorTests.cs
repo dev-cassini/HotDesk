@@ -12,6 +12,20 @@ namespace HotDesk.Domain.UnitTests.Validators.Departments
     public class DepartmentValidatorTests
     {
         [Test]
+        public async Task ValidationFailsWhenNameisEmptyString()
+        {
+            var sut = new DepartmentValidator();
+            var department = new DepartmentBuilder()
+                .WithName(string.Empty)
+                .Build();
+
+            var validationResult = await sut.TestValidateAsync(department);
+
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.ShouldHaveValidationErrorFor(d => d.Name);
+        }
+
+        [Test]
         public async Task ValidationFailsWhenNameExceedsMaxLength()
         {
             var sut = new DepartmentValidator();

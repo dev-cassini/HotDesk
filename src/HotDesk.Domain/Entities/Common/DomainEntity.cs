@@ -17,7 +17,7 @@ namespace HotDesk.Domain.Entities.Common
         public DomainEntity(Guid id)
         {
             Id = id;
-            CreatedAt = DateTime.UtcNow;
+            CreatedAt = DateTimeOffset.UtcNow;
             LastUpdatedAt = CreatedAt;
 
             new DomainEntityValidator().ValidateAndThrow(this);

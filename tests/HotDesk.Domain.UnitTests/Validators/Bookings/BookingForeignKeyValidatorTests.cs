@@ -6,10 +6,8 @@ using HotDesk.Domain.Validators.Bookings;
 using HotDesk.TestHelper.Builders;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace HotDesk.Domain.UnitTests.Validators.Bookings
@@ -17,8 +15,8 @@ namespace HotDesk.Domain.UnitTests.Validators.Bookings
     [TestFixture]
     public class BookingForeignKeyValidatorTests
     {
-        private BookingForeignKeyValidator _sut;
-        private Mock<IReadOnlyRepository> _readOnlyRepository;
+        private BookingForeignKeyValidator _sut = null!;
+        private Mock<IReadOnlyRepository> _readOnlyRepository = null!;
 
         [SetUp]
         public void SetUp()

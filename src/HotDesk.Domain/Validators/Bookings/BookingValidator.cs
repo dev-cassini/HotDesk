@@ -7,6 +7,7 @@ namespace HotDesk.Domain.Validators.Bookings
     {
         public BookingValidator()
         {
+            RuleFor(booking => booking).SetValidator(new DomainEntityValidator());
             RuleFor(booking => booking.DeskId).NotEmpty();
             RuleFor(booking => booking.PersonId).NotEmpty();
             RuleFor(booking => booking.StartTime).NotEmpty();
