@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\HotDesk.Application\HotDesk.Application.csproj" />
     <ProjectReference Include="..\..\src\HotDesk.Domain\HotDesk.Domain.csproj" />
   </ItemGroup>
 

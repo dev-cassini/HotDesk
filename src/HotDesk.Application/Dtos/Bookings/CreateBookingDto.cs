@@ -2,7 +2,7 @@
 
 namespace HotDesk.Application.Dtos.Bookings
 {
-    public class CreateBookingDto : IDto
+    public class CreateBookingDto
     {
         public Guid DeskId { get; init; }
 
