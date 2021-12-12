@@ -23,6 +23,7 @@ namespace HotDesk.Infrastructure
         public DbSet<Department> Departments { get; set; } = null!;
         public DbSet<Desk> Desks { get; set; } = null!;
         public DbSet<Location> Locations { get; set; } = null!;
+        public DbSet<Floorplan> Floorplans { get; set; } = null!;
         public DbSet<LocationDepartment> LocationDepartments { get; set; } = null!;
         public DbSet<Person> Persons { get; set; } = null!;
 
