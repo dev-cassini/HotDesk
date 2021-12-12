@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.Desks
+namespace HotDesk.Domain.UnitTest.Validators.Desks
 {
     [TestFixture]
     public class DeskValidatorTests

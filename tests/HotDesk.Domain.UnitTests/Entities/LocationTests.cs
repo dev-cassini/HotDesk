@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace HotDesk.Domain.UnitTests.Entities
+namespace HotDesk.Domain.UnitTest.Entities
 {
     [TestFixture]
     public class LocationTests

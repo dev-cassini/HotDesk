@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.Floorplans
+namespace HotDesk.Domain.UnitTest.Validators.Floorplans
 {
     [TestFixture]
     public class FloorplanForeignKeyValidatorTests

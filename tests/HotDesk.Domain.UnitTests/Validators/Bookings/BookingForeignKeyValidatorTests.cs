@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.Bookings
+namespace HotDesk.Domain.UnitTest.Validators.Bookings
 {
     [TestFixture]
     public class BookingForeignKeyValidatorTests

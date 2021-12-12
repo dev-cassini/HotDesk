@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.Floorplans
+namespace HotDesk.Domain.UnitTest.Validators.Floorplans
 {
     [TestFixture]
     public class FloorplanValidatorTests

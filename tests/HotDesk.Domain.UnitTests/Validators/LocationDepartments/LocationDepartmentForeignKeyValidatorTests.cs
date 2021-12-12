@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.LocationDepartments
+namespace HotDesk.Domain.UnitTest.Validators.LocationDepartments
 {
     [TestFixture]
     public class LocationDepartmentForeignKeyValidatorTests

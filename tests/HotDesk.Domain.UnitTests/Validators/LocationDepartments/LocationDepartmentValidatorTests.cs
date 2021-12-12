@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.LocationDepartments
+namespace HotDesk.Domain.UnitTest.Validators.LocationDepartments
 {
     [TestFixture]
     public class LocationDepartmentValidatorTests

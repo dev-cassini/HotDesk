@@ -6,7 +6,7 @@ using HotDesk.TestHelper.Builders;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.Persons
+namespace HotDesk.Domain.UnitTest.Validators.Persons
 {
     [TestFixture]
     public class PersonValidatorTests

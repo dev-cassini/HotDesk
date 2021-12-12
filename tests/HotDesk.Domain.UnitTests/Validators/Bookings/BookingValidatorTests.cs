@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace HotDesk.Domain.UnitTests.Validators.Bookings
+namespace HotDesk.Domain.UnitTest.Validators.Bookings
 {
     [TestFixture]
     public class BookingValidatorTests

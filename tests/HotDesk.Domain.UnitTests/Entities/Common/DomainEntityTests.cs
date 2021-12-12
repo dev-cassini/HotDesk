@@ -4,7 +4,7 @@ using HotDesk.Domain.Entities.Common;
 using NUnit.Framework;
 using System;
 
-namespace HotDesk.Domain.UnitTests.Entities.Common
+namespace HotDesk.Domain.UnitTest.Entities.Common
 {
     [TestFixture]
     public class DomainEntityTests
